@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<head>
+  <meta charset="utf-8">
+  <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"><![endif]-->
+  <title>上海怪糖运维管理平台</title>
+  <meta name="keywords" content="" />
+  <meta name="description" content="" />
+  <meta name="viewport" content="width=device-width">
+  <link rel="stylesheet" href="/static/css/templatemo_main.css">
+
+</head>
+<body>
+  <div class="navbar navbar-inverse" role="navigation">
+      <div class="navbar-header">
+        <div class="logo"><h1>Hello , <a href="/profile/">{{request.user.employee.Name}} </a>！</h1></div>
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+      </div>
+    </div>
+    <div class="template-page-wrapper">
+      <div class="navbar-collapse collapse templatemo-sidebar">
+        <ul class="templatemo-sidebar-menu">
+          <li class="active"><a href="/"><i class="fa fa-home"></i>首页</a></li>
+          <li class="sub {{ proplat }}" >
+            <a href="javascript:;">
+              <i class="fa fa-database"></i> 项目平台 <div class="pull-right"><span class="caret"></span></div>
+            </a>
+            <ul class="templatemo-submenu">
+              <li><a href="/ddz/">斗地主 DDZ</a></li>
+              <li><a href="/ymyj/">牙木一家(三个奶爸) YMYJ </a></li>
+              <li><a href="/tstd/">三国 TSTD </a></li>
+              <li><a href="/superstar/">篮球 SuperStar </a></li>
+              <li><a href="/atm/">奥特曼 atm </a></li>
+              <li><a href="/six/">火线突击 six </a></li>
+              <li><a href="/gamer/">天津怪糖 gamer </a></li>
+            </ul>
+          </li>
+          <li class="sub {{ manplat }} ">
+            <a href="javascript:;">
+              <i class="fa fa-database"></i> 管理平台 <div class="pull-right"><span class="caret"></span></div><span class="badge pull-right">限运维人员</span>
+            </a>
+            <ul class="templatemo-submenu">
+              <li><a href="/ops/user/">用户管理 </a></li>
+              <li><a href="/ops/showhost/">主机管理</a></li>
+              <li><a href="/ops/security/">安全设置</a></li>
+              <!--li><a href="/sc/">自定义模块</a></li-->
+            </ul>
+          </li>
+          <li><a href="/profile/"><i class="fa fa-cog"></i>个人配置</a></li>
+          <li><a href="javascript:;" data-toggle="modal" data-target="#confirmModal"><i class="fa fa-sign-out"></i>退出</a></li>
+        </ul>
+      </div><!--/.navbar-collapse -->
+
+      <div class="templatemo-content-wrapper">
+        <div class="templatemo-content">
+
+
+          {% block content %}
+
+          {% endblock %}
+
+        </div>
+      </div>
+
+
+
+      <!-- Modal -->
+      <div class="modal fade" id="confirmModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+              <h4 class="modal-title" id="myModalLabel">请确定是否要退出？</h4>
+            </div>
+            <div class="modal-footer">
+              <a href="/logout/" class="btn btn-primary">是</a>
+              <button type="button" class="btn btn-default" data-dismiss="modal">否</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <footer class="templatemo-footer">
+        <div class="templatemo-copyright">
+          <p>Copyright &copy; 2084 OGRE SUGAR <a href="http://www.ogresugar.com" target="_blank">上海怪糖</a></p>
+        </div>
+      </footer>
+    </div>
+
+    <script src="/static/js/jquery.min.js"></script>
+    <script src="/static/js/bootstrap.min.js"></script>
+    <script src="/static/js/Chart.min.js"></script>
+    <script src="/static/js/templatemo_script.js"></script>
+    <script type="text/javascript">
+    // Line chart
+    var randomScalingFactor = function(){ return Math.round(Math.random()*100)};
+    var lineChartData = {
+      labels : ["January","February","March","April","May","June","July"],
+      datasets : [
+      {
+        label: "My First dataset",
+        fillColor : "rgba(220,220,220,0.2)",
+        strokeColor : "rgba(220,220,220,1)",
+        pointColor : "rgba(220,220,220,1)",
+        pointStrokeColor : "#fff",
+        pointHighlightFill : "#fff",
+        pointHighlightStroke : "rgba(220,220,220,1)",
+        data : [randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor()]
+      },
+      {
+        label: "My Second dataset",
+        fillColor : "rgba(151,187,205,0.2)",
+        strokeColor : "rgba(151,187,205,1)",
+        pointColor : "rgba(151,187,205,1)",
+        pointStrokeColor : "#fff",
+        pointHighlightFill : "#fff",
+        pointHighlightStroke : "rgba(151,187,205,1)",
+        data : [randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor()]
+      }
+      ]
+
+    }
+
+    /*
+    window.onload = function(){
+      var ctx_line = document.getElementById("templatemo-line-chart").getContext("2d");
+      window.myLine = new Chart(ctx_line).Line(lineChartData, {
+        responsive: true
+      });
+    };
+    */
+
+    $('#modsel').change(function(){
+      var url = $(location).attr('href');
+      var urlparm=url.split('/');
+      var newurl="";
+
+      //alert(urlparm[urlparm.length-2]);
+      if ($.isNumeric(urlparm[urlparm.length-2])){
+        for (i=0;i<urlparm.length-2;i++)
+          newurl = newurl + urlparm[i] + '/';
+
+      newurl = newurl + $(this).val().trim() + "/";
+      }
+      else
+        newurl=url +$(this).val().trim() + "/";
+        window.location = newurl;
+        return false;
+    })
+
+    $('#myTab a').click(function (e) {
+      e.preventDefault();
+      $(this).tab('show');
+    });
+
+    $("td #upbtn").click(function(){
+      if($(this).html()=="更新"){
+        $(this).html("确定");
+
+        $(".btn-info").html('更新');
+        $(".btn-info").attr("class","btn btn-default");
+
+        var $up_gpname=$("td input[name='up_gpname']")
+        $up_gpname.parent().html($up_gpname.val());
+        var $up_gpmemo=$("td input[name='up_gpmemo']");
+        $up_gpmemo.parent().html($up_gpmemo.val());
+
+        $(this).attr("class","btn");
+        $(this).addClass("btn-info");
+        var $name=$(this).parent().prev().prev();
+        var $memo=$(this).parent().prev();
+        $name_txt=$name.html();
+        $memo_txt=$memo.html();
+        $name.html('');
+        $memo.html('');
+        $name.append("<input type='text' class='form-control' name='up_gpname' value=" + $name_txt + ">");
+        $memo.append("<input type='text' class='form-control' name='up_gpmemo' value=" + $memo_txt + ">");
+        return false;
+      }
+      else if($(this).html()=="确定"){
+        var $name=$(this).parent().prev().prev().children();
+        var $memo=$(this).parent().prev().children();
+
+        if($name.val()==""){
+         alert('名称不能为空！')
+         return false;
+        }
+        else{
+          var id=$(this).val();
+          $("#getfun").val("update");
+          $("#getid").val(id);
+          $("#gameplatform").submit();
+        }
+      }
+    });
+
+    $('#addbtn').click(function (){
+      if ($('#gameplatname').val() == ""){
+        $('#namemsg').html('请输入名称！');
+        $("input[name='gameplatname']").focus();
+        return false;
+      }
+      else {
+        gamename=$('#gameplatname').val();
+        var obj=$(this).val()
+        $.ajax({
+          async:false,
+          type:"POST",
+          url:"/check/"+obj+"/",
+          data:{name:gamename},
+          dataType:"json",
+          success:function(data){
+            $('#namemsg').html(data.msg);
+          }
+        });
+      }
+       if( $('#namemsg').html()==''){
+          $("#getfun").val("add");
+          $("#gameplatform").submit();
+        }
+        else
+          return false;
+
+    });
+
+     $('#useraddbtn').click(function (){
+      if ($('#gameplatname').val() == ""){
+        $('#namemsg').html('请输入名称！');
+        $("input[name='gameplatname']").focus();
+        return false;
+      }
+      else {
+        gamename=$('#gameplatname').val();
+        var obj=$(this).val()
+        $.ajax({
+          async:false,
+          type:"POST",
+          url:"/check/"+obj+"/",
+          data:{name:gamename},
+          dataType:"json",
+          success:function(data){
+            $('#namemsg').html(data.msg);
+          }
+        });
+      }
+       if( $('#namemsg').html()==''){
+          $("#getfun").val("add");
+          $("#gameplatform").submit();
+        }
+        else
+          return false;
+
+    });
+
+    $('#modmy').click(function(){
+      if ($('#userpwd0').val() == ""){
+        $('#userpwd0msg').html('必须输入原密码！');
+        return false;
+        }
+        if ($('#userpwd1').val() != "" && $('#userpwd1').val() != $('#userpwd2').val()) {
+          $('#userpwd2msg').html('密码不一致！');
+          return false;
+        }
+        else if($('#userpwd1').val() == "" && $('#username').val() == "") {
+          $('#usernamemsg').html('密码和用户不能同时为空！');
+          return false;
+
+        }
+        $("form").submit();
+    });
+
+    $("td #delbtn").click(function(){
+      var id=$(this).val();
+      $("#getfun").val("del");
+      $("#getid").val(id);
+      $("#gameplatform").submit();
+
+    });
+
+      $("td #userupbtn").click(function(){
+      if($(this).html()=="更新"){
+        $(this).html("确定");
+
+        $(".btn-info").html('更新');
+        $(".btn-info").attr("class","btn btn-default");
+
+        //清空非当前的文本框
+        var $up_name=$("td input[name='up_name']")
+        $up_name.parent().html($up_name.val());
+        var $up_pwd2=$("td input[name='up_pwd2']");
+        $up_pwd2.parent().html('***');
+        var $up_pwd1=$("td input[name='up_pwd1']");
+        $up_pwd1.parent().html('***');
+        //var $up_uid=$("td input[name='up_uid']")
+        //$up_uid.parent().html($up_uid.val());
+        var $up_gplat=$("td select[name='up_gplat']")
+        $up_gplat.parent().html($up_gplat.val());
+
+        $(this).attr("class","btn btn-info");
+
+        var $gps=$(this).parent().prev();
+        var $name=$gps.prev();
+        var $pwd2=$name.prev();
+        var $pwd1=$pwd2.prev();
+        var $uid=$pwd1.prev();
+
+        $name_txt=$name.html();
+        $uid_txt=$uid.html();
+        $gps_txt=$gps.html();
+
+        $gps.html('');
+        $name.html('');
+        $pwd2.html('');
+        $pwd1.html('');
+        //$uid.html('');
+
+        var $newsel=$('#gplat').clone();
+        $newsel.attr('id','up_gplat');
+        $newsel.attr('name','up_gplat');
+
+
+        $gps.append($newsel);
+
+        $name.append("<input type='text' class='form-control' name='up_name' value=" + $name_txt + ">");
+        $pwd2.append("<input type='password' class='form-control' name='up_pwd2' value=''placeholder='确认密码' >");
+        $pwd1.append("<input type='password' class='form-control' name='up_pwd1' value=''placeholder='密码' >");
+        //$uid.append("<input type='text' class='form-control' name='up_uid' value=" + $uid_txt + ">");;
+
+        return false;
+      }
+      else if($(this).html()=="确定"){
+        var $name=$(this).parent().prev().prev().children();
+        var $pwd2=$name.prev().children();
+        var $pwd1=$pwd2.prev().children();
+
+        if($name.val()==""){
+         alert('名称不能为空！')
+         return false;
+        }
+        else if($pwd1.val()!=$pwd2.val()){
+          alert('密码不匹配！');
+          return false;
+        }
+        else if($pwd1==''){
+          alert('密码不能为空!');
+          return false;
+        }
+        else{
+          var id=$(this).val();
+          $("#getfun").val("update");
+          $("#getid").val(id);
+          $("#gameplatform").submit();
+        }
+      }
+    });
+
+      $('#add').click(function(){
+        var $options = $('#multipleSelect option:selected');
+        $options.appendTo('#multipleSelect2');
+      });
+
+       $('#addall').click(function(){
+        var $options = $('#multipleSelect option');
+        $options.appendTo('#multipleSelect2');
+      });
+
+       $('#mov').click(function(){
+        var $options = $('#multipleSelect2 option:selected');
+        $options.appendTo('#multipleSelect');
+      });
+
+       $('#movall').click(function(){
+        var $options = $('#multipleSelect2 option');
+        $options.appendTo('#multipleSelect');
+      });
+
+      $('#multipleSelect').dblclick(function(){
+        var $options = $("option:selected",this);
+        $options.appendTo('#multipleSelect2');
+      });
+
+       $('#multipleSelect2').dblclick(function(){
+        var $options = $("option:selected",this);
+        $options.appendTo('#multipleSelect');
+      });
+
+      function checkIP(value){
+      var exp=/^(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])$/;
+      var reg = value.match(exp);
+      if(reg==null)
+      {
+      alert("IP地址不合法！");
+      return false;
+      }
+      return true;
+    }
+
+      $('#subadd').click(function(){
+        optlen=$('#multipleSelect2 option').length;
+        custlen=$('#customip').val().length;
+        if($('#ipgroupname').val()=="")
+        {
+          alert('IP组名不能为空!');
+          return false;
+        }
+        if(optlen==0 && custlen==0)
+        {
+          alert('IP不能为空');
+          return false;
+        }
+        /*
+        else
+        {
+          if(custlen!=0)
+          {
+            var myips=$('#customip').val().split();
+            for(var i=0;i<myips.length;){
+              if(!checkIP(myips[i++])){
+              $('#customip').focus();
+              return false;
+              }
+            }
+
+          }
+        }
+        */
+
+        $("form").submit();
+      });
+
+    $("#applypolicy").change(function(){
+      var url = $(location).attr('href');
+      var urlparm=url.split('/');
+      var newurl="";
+
+      //alert(urlparm[urlparm.length-2]);
+      if ($.isNumeric(urlparm[urlparm.length-2])){
+        for (i=0;i<urlparm.length-2;i++)
+          newurl = newurl + urlparm[i] + '/';
+
+      newurl = newurl + $(this).val().trim() + "/";
+      }
+      else
+        newurl=url +$(this).val().trim() + "/";
+        window.location = newurl;
+        return false;
+    });
+
+    $('#ports').click(function(){
+      $('[name=port]:checkbox').attr('checked',this.checked);
+    });
+
+    $('[name=port]:checkbox').click(function(){
+      var flag=true;
+      $('[name=port]:checkbox').each(function(){
+        if(!this.checked){
+          flag=false;
+        }
+      });
+      $('#ports').attr('checked',flag);
+    });
+
+    $('#addpolicybtn').click(function(){
+      $('#netfilterfun').val('add');
+      $("form").submit();
+
+    });
+
+    $('#applypolicybtn').click(function(){
+      $('#netfilterfun').val('apply');
+      $("form").submit();
+
+    });
+
+    $('[name=delp]').click(function(){
+    $('#netfilterfun').val($(this).val());
+    $("form").submit();
+    });
+
+    $('#update').click(function(){
+      var flag=false;
+      $('[name=port]:checkbox').each(function(){
+        if(this.checked){
+          flag=true;
+          return false;
+        }
+      });
+
+      if(flag) {
+        $("form").submit();
+      }
+      else {
+        alert('请选择相应的主机!');
+        return false;
+      }
+
+
+    });
+    {% block jspartial %}
+
+    {% endblock %}
+
+
+    $('#loading-example-btn').click(function () {
+      var btn = $(this);
+      btn.button('loading');
+      // $.ajax(...).always(function () {
+      //   btn.button('reset');
+      // });
+  });
+  </script>
+</body>
+</html>

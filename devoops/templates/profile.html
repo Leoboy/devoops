@@ -1,0 +1,91 @@
+{% extends "base.html" %}
+{% block content%}
+
+{% include "includes/usernav.html" %}
+<form role="form" action="/profile/" method="post">
+<div class="panel panel-primary">
+      <div class="panel-heading">[ {{ request.user.employee.Name}} ] 个人用户配置</div>
+      <div class="panel-body">
+
+          <div class="form-group row">
+            <label for="gameplatname" class="col-sm-2 control-label">用户ID</label>
+            <div class="col-sm-5">
+                <input class="form-control" id="gameplatname" type="text" name="gameplatname" value="{{request.user}}" disabled="disabled">
+            </div>
+        </div>
+
+          <div class="form-group row">
+        <label class="col-sm-2 control-label">所属游戏平台</label>
+        <div class="col-sm-5">
+            <input class="form-control" id="usergp" type="text" name="usergp" value="" placeholder="{%for g in my.Gplat.all %} {{g.Name}} {% endfor %}" disabled="disabled">
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label for="userpwd1" class="col-sm-2 control-label">用户原密码</label>
+            <div class="col-sm-5">
+                <input class="form-control" id="userpwd0" type="password" name="userpwd0" value="" placeholder="原密码[必填]">
+            </div>
+                <div class="col-sm-2">
+                <p id="userpwd0msg" class="alert-danger"></p>
+            </div>
+        </div>
+
+          <div class="form-group row">
+            <label for="userpwd1" class="col-sm-2 control-label">用户新密码：</label>
+            <div class="col-sm-5">
+                <input class="form-control" id="userpwd1" type="password" name="userpwd1" value="" placeholder="用户新密码">
+            </div>
+                <div class="col-sm-2" class="alert-danger">
+                <p id="userpwd1msg"></p>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label for="userpwd2" class="col-sm-2 control-label">确认新密码</label>
+            <div class="col-sm-5">
+                <input class="form-control" id="userpwd2" type="password" name="userpwd2" value="" placeholder="确认新密码">
+            </div>
+                <div class="col-sm-2">
+                <p id="userpwd2msg" class="alert-danger"></p>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label for="username" class="col-sm-2 control-label">用户名称</label>
+            <div class="col-sm-5">
+                <input class="form-control" id="username" type="text" name="username" value="" placeholder="{{my.Name}}">
+            </div>
+                <div class="col-sm-2">
+                <p id="usernamemsg"></p>
+            </div>
+        </div>
+
+
+
+        <div class="form-group row">
+            <div class="col-md-7">
+                <button type="button" class="btn btn-primary" style="float:right;" id="modmy" value="user">修改</button>
+            </div>
+        </div>
+    </div>
+
+    </div>
+    {% if result.success %}
+    <div class="alert alert-success alert-dismissible" role="alert">
+      <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+      <strong>Success!</strong> 修改成功!.
+    </div>
+    {% endif %}
+
+    {%  if result.error%}
+    <div class="alert alert-danger alert-dismissible" role="alert">
+      <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+      <strong>Error!</strong>{{result.error}}.
+    </div>
+    {% endif %}
+
+</div>
+</form>
+
+{% endblock %}

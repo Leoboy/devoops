@@ -1,0 +1,163 @@
+{% extends "base.html" %}
+{% block content%}
+
+{% include "includes/hostnav.html" %}
+
+<div class="panel panel-primary">
+    <div class="panel-heading">更新主机</div>
+</div>
+
+
+
+
+    <form role="form" id="templatemo-preferences-form" action="/ops/sethost/mod/" method="post">
+    <div class="panel-body">
+            <div class="col-md-15">
+                <div class="list-group row">
+    <label class="col-sm-2 control-label">选择主机：</label>
+    <div class="col-sm-10">
+        <select class="form-control" name="modsel" id="modsel">
+            {% for h in hosts %}
+                {% ifequal h.id hostid %}
+                    <option value="{{ h.id }}" selected="selected">{{ h.HostName }} {{ h.Memo}} {{h.IP2}}</option>
+                {% else %}
+                    <option value="{{ h.id }}">{{ h.HostName }} {{ h.Memo}} {{h.IP2}}</option>
+                {% endifequal %}
+            {% endfor %}
+        </select>
+    </div>
+</div>
+        <hr style="width: 100%; color: black; height: 1px; background-color:black;"/>
+
+                <div class="form-group row">
+                    <label for="hostname" class="col-sm-2 control-label">主机名[*必选]：</label>
+                    <div class="col-sm-10">
+                        <input class="form-control" id="hostname" type="text" name="hostname" placeholder="HostName" value="{{host.HostName}}">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="loginuser" class="col-sm-2 control-label">登录用户[*必选]：</label>
+                    <div class="col-sm-10">
+                        <input class="form-control" id="loginuser" type="text" name="loginuser" value="{{host.LoginUser}}" placeholder="LoginUser">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="pwd" class="col-sm-2 control-label">用户密码[*必选]：</label>
+                    <div class="col-sm-10">
+                        <input class="form-control" id="pwd" type="text" name="pwd" value="{{host.Password}}" placeholder="PassWord">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="port" class="col-sm-2 control-label">SSH端口[*必选]：</label>
+                    <div class="col-sm-10">
+                        <input class="form-control" id="port" type="text" name="port" value="{{host.Port}}" placeholder="SSH Port">
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="ip1" class="col-sm-2 control-label">公网IP[选填]：</label>
+                    <div class="col-sm-10">
+                        <input class="form-control" id="ip1" type="text" name="ip1" value="{{host.IP1|default:''}}" placeholder="IP Address 1">
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="ip2" class="col-sm-2 control-label">内网IP[*必选]：</label>
+                    <div class="col-sm-10">
+                        <input class="form-control" id="ip2" type="text" name="ip2" value="{{host.IP2}}" placeholder="IP Address 2">
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="ip3" class="col-sm-2 control-label">IP3[选填]：</label>
+                    <div class="col-sm-10">
+                        <input class="form-control" id="ip3" type="text" name="ip3" value="{{host.IP3|default:''}}" placeholder="IP Address 3">
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="ip4" class="col-sm-2 control-label">IP4[选填]：</label>
+                    <div class="col-sm-10">
+                        <input class="form-control" id="ip4" type="text" name="ip4" value="{{host.IP4|default:''}}" placeholder="IP Address 4">
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="sid" class="col-sm-2 control-label">服务器ID[*必选]：</label>
+                    <div class="col-sm-10">
+                        <input class="form-control" id="sid" type="text" name="sid" value="{{host.SID}}" placeholder="Server ID">
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="memo" class="col-sm-2 control-label">备注[选填]：</label>
+                    <div class="col-sm-10">
+                        <input class="form-control" id="memo" type="text" name="memo" value="{{host.Memo}}" placeholder="Memo">
+                    </div>
+                </div>
+
+
+
+                <div class="form-group row">
+                    <label class="col-sm-2 control-label">服务器状态[*必选]：</label>
+                    <div class="col-sm-10">
+                    <select class="form-control" name="status">
+                    <option value="RUN" {{ sel.RUN }}>运行中</option>
+                    <option value="SUP" {{ sel.SUP }}>待定中</option>
+                    <option value="CLS" {{ sel.CLS }}>已关机</option>
+                    <option value="DEL" {{ sel.DEL }}>已删除</option>
+                    </select>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label class="col-sm-2 control-label">游戏平台[*必选]：</label>
+                    <div class="col-sm-10">
+                    <select class="form-control" name="gplat">
+                    {% for gp in gPlats %}
+                        {% ifequal host.GPlat_id gp.id %}
+                            <option value="{{ gp.id }}" selected="selected" >{{ gp }} {{gp.Memo}}</option>
+                        {% else %}
+                            <option value="{{ gp.id }}">{{ gp }} {{gp.Memo}}</option>
+                        {% endifequal %}
+                    {% endfor %}
+                    </select>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label class="col-sm-2 control-label">服务器平台[*必选]：</label>
+                    <div class="col-sm-10">
+                    <select class="form-control" name="splat">
+                    {% for sp in sPlats %}
+                        {% ifequal host.SrvPlat_id sp.id %}
+                            <option value="{{ sp.id }}" selected="selected">{{ sp.Name }} {{ sp.Memo}}</option>
+                        {% else %}
+                            <option value="{{ sp.id }}">{{ sp.Name }} {{ sp.Memo}}</option>
+                        {% endifequal %}
+                    {% endfor %}
+                    </select>
+                    </div>
+                </div>
+
+                <div class="col-md-12">
+                    <button type="submit" class="btn btn-primary">更新</button>
+                </div>
+
+
+          </div>
+    </div>
+    </form>
+
+<div class="alert alert-success alert-dismissible" role="alert" style="display:{{sdisplay|default:'none'}};">
+    <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+    <strong>Success!</strong> {{message}}
+</div>
+
+<div class="alert alert-danger alert-dismissible" role="alert" style="display:{{edisplay|default:'none'}};">
+    <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+    <strong>Error!</strong> {{message}}
+</div>
+
+
+{% endblock %}

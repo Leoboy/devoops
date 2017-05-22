@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block content%}
+<div class="clearfix">
+    <h3 class="content-title pull-left">错误</h3>
+</div>
+<div class="row">
+    <div class="col-md-12 not-found text-center">
+       <div class="error-500">
+          权限不足
+       </div>
+    </div>
+    <div class="col-md-4 col-md-offset-4 not-found text-center">
+       <div class="content">
+          <h3>对不起，你没有此项权限！</h3>
+          <p>
+            权限不足，如有问题，请联系<a href="#">管理员</a>
+          </p>
+          <div class="btn-group">
+            <a href="#" class="btn btn-danger"><i class="fa fa-chevron-left"></i>后退</a>
+            <a href="/" class="btn btn-default">首页</a>
+          </div>
+       </div>
+    </div>
+ </div>
+{% endblock %}

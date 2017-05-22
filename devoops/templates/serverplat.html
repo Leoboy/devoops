@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+{% block content%}
+{% include "includes/hostnav.html" %}
+
+<div class="panel panel-primary">
+    <div class="panel-heading">服务器平台</div>
+</div>
+
+<form role="form" id="gameplatform" action="/ops/sethost/serverplat/" method="post">
+    <div class="form-group row">
+        <label for="gameplatname" class="col-sm-2 control-label">服务器平台：[*必选]：</label>
+        <div class="col-sm-5">
+            <input class="form-control" id="gameplatname" type="text" name="gameplatname" value="" placeholder="服务器平台名">
+        </div>
+        <div class="col-sm-2">
+            <p id="namemsg" class="alert-danger"></p>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label for="gameplatmemo" class="col-sm-2 control-label">备注：[选填]：</label>
+        <div class="col-sm-5">
+            <input class="form-control" id="gameplatmemo" type="text" name="gameplatmemo" value="" placeholder="服务器平台备注">
+        </div>
+            <div class="col-sm-2">
+            <p id="memomsg"></p>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <div class="col-md-7">
+            <button type="button" class="btn btn-primary" style="float:right;" id="addbtn" value="sp">添加</button>
+        </div>
+    </div>
+
+    <div class="col-md-7">
+    <div class="table-responsive">
+        <table class="table table-striped table-hover table-bordered">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>名称</th>
+                    <th>备注</th>
+                    <th>更新</th>
+                    <th>Delete</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for sp in sps %}
+                <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <td>{{ sp.Name }}</td>
+                    <td>{{ sp.Memo }}</td>
+                    <td><button type="button" class="btn btn-default" id="upbtn" value="{{ sp.id }}">更新</button></td>
+                    <td><button type="button" class="btn btn-link" id="delbtn" value="{{ sp.id }}">删除</button></td>
+                </tr>
+                {% endfor %}
+
+            </tbody>
+        </table>
+    </div>
+    </div>
+    <input type="hidden"  name="getfun" id="getfun" value="0"/>
+    <input type="hidden"  name="getid" id="getid" value="0"/>
+    </form>
+
+{% endblock %}

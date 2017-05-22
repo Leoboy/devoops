@@ -1,0 +1,136 @@
+{% extends "base.html" %}
+{% block content%}
+
+{% include "includes/hostnav.html" %}
+
+
+<div class="panel panel-primary">
+    <div class="panel-heading">添加主机</div>
+</div>
+    <div class="panel-body">
+            <div class="col-md-12">
+              <form role="form" id="templatemo-preferences-form" action="/ops/sethost/add/" method="post">
+                <div class="form-group row">
+                    <label for="hostname" class="col-sm-2 control-label">主机名[*必选]：</label>
+                    <div class="col-sm-10">
+                        <input class="form-control" id="hostname" type="text" name="hostname" value="" placeholder="HostName">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="loginuser" class="col-sm-2 control-label">登录用户[*必选]：</label>
+                    <div class="col-sm-10">
+                        <input class="form-control" id="loginuser" type="text" name="loginuser" value="" placeholder="LoginUser">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="pwd" class="col-sm-2 control-label">用户密码[*必选]：</label>
+                    <div class="col-sm-10">
+                        <input class="form-control" id="pwd" type="text" name="pwd" value="" placeholder="PassWord">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="port" class="col-sm-2 control-label">SSH端口[*必选]：</label>
+                    <div class="col-sm-10">
+                        <input class="form-control" id="port" type="text" name="port" value="" placeholder="SSH Port">
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="ip1" class="col-sm-2 control-label">公网IP[选填]：</label>
+                    <div class="col-sm-10">
+                        <input class="form-control" id="ip1" type="text" name="ip1" value="" placeholder="IP Address 1">
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="ip2" class="col-sm-2 control-label">内网IP[*必选]：</label>
+                    <div class="col-sm-10">
+                        <input class="form-control" id="ip2" type="text" name="ip2" value="" placeholder="IP Address 2">
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="ip3" class="col-sm-2 control-label">IP3[选填]：</label>
+                    <div class="col-sm-10">
+                        <input class="form-control" id="ip3" type="text" name="ip3" value="" placeholder="IP Address 3">
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="ip4" class="col-sm-2 control-label">IP4[选填]：</label>
+                    <div class="col-sm-10">
+                        <input class="form-control" id="ip4" type="text" name="ip4" value="" placeholder="IP Address 4">
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="sid" class="col-sm-2 control-label">服务器ID[*必选]：</label>
+                    <div class="col-sm-10">
+                        <input class="form-control" id="sid" type="text" name="sid" value="" placeholder="Server ID">
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="memo" class="col-sm-2 control-label">备注[选填]：</label>
+                    <div class="col-sm-10">
+                        <input class="form-control" id="memo" type="text" name="memo" value="" placeholder="Memo">
+                    </div>
+                </div>
+
+
+
+                <div class="form-group row">
+                    <label class="col-sm-2 control-label">服务器状态[*必选]：</label>
+                    <div class="col-sm-10">
+                    <select class="form-control" name="status">
+                    <option value="RUN">运行中</option>
+                    <option value="SUP">待定中</option>
+                    <option value="CLS">已关机</option>
+                    <option value="DEL">已删除</option>
+                    </select>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label class="col-sm-2 control-label">游戏平台[*必选]：</label>
+                    <div class="col-sm-10">
+                    <select class="form-control" name="gplat">
+                    {% for gp in gPlats %}
+                        <option value="{{ gp.id }}">{{ gp }} {{gp.Memo}}</option>
+                    {% endfor %}
+                    </select>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label class="col-sm-2 control-label">服务器平台[*必选]：</label>
+                    <div class="col-sm-10">
+                    <select class="form-control" name="splat">
+                    {% for sp in sPlats %}
+                        <option value="{{ sp.id }}">{{ sp.Name }} {{ sp.Memo}}</option>
+                    {% endfor %}
+                    </select>
+                    </div>
+                </div>
+
+                <div class="col-md-12">
+                    <button type="submit" class="btn btn-primary">添加</button>
+                </div>
+            </form>
+
+          </div>
+    </div>
+
+
+<div class="alert alert-success alert-dismissible" role="alert" style="display:{{sdisplay|default:'none'}};">
+    <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+    <strong>Success!</strong> {{message}}
+</div>
+
+<div class="alert alert-danger alert-dismissible" role="alert" style="display:{{edisplay|default:'none'}};">
+    <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+    <strong>Error!</strong> {{message}}
+</div>
+
+
+{% endblock %}

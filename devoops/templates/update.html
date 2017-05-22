@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+{% block content%}
+{% include "includes/appnav.html" %}
+<form role="form" action="/{{appname}}/update/" method="post">
+<div class="panel panel-primary">
+  <div class="panel-heading">{{apptitle}}</div>
+  <div class="panel-body">
+      <table class="table table-striped table-hover table-bordered">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>主机</th>
+              <th>类别</th>
+              <th>IP1</th>
+              <th>路径</th>
+              <th>源主机</th>
+              <th>源IP1</th>
+              <th>源路径</th>
+              <th>文件/参数</th>
+              <th>命令</th>
+              <th>备注</th>
+            </tr>
+          </thead>
+            <tbody>
+            {% for r in rols %}
+
+                <tr>
+                {% if r.Type %}
+                    <td> <input type="checkbox" name="port" value="{{r.Name}}" /></td>
+                {% else %}
+                    <td> <input type="checkbox" name="port" value="{{r.Name}}" disabled="disabled" /></td>
+                {% endif %}
+                <td>{{r.Name}}</td>
+                <td>{{ r.Type }}</td>
+                <td>{{ r.DHost.IP1 }}</td>
+                <td>{{ r.DPath }}</td>
+                <td>{{r.SHost.HostName}}</td>
+                <td>{{r.SHost.IP1}}</td>
+                <td>{{r.SPath}}</td>
+                <td>{{r.File}}</td>
+                <td>{{r.ExeCom}}</td>
+                <td>{{r.Memo}}</td>
+                </tr>
+            {% endfor %}
+            <tr>
+                <td colspan="11"><button type="button" id="update" class="btn btn-primary" style="float:right;" >更新</button> </td>
+            </tr>
+
+
+
+          </tbody>
+
+    </table>
+      <div class="alert alert-info alert-dismissible" role="alert"><strong>更新结果：</strong>
+                      {% for rt in result %} {{ rt|safe }} <br /> {% endfor %}
+                    </div>
+    </div>
+
+    </div>
+</div>
+</form>
+{% endblock %}
+
+{% block jspartial %}
+
+$(document).ready(function(){
+	$('table tbody tr').each(function(){
+		var firstColor = 'success',
+			otherColor = 'danger';
+		$('table tbody tr:first').addClass(firstColor);
+		var key = $(this).find('td').eq(2);
+		var prevKey = key.parent().prev().find('td').eq(2);
+		if(!key.parent().attr('class')){
+			var color = key.parent().prev().attr('class');
+			if(key.text() != prevKey.text()){
+				(color == firstColor)?key.parent().addClass(otherColor):key.parent().addClass(firstColor);
+			}
+			else{
+				key.parent().addClass(color);
+			}
+		}
+	});
+});
+
+{% endblock %}

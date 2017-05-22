@@ -1,0 +1,109 @@
+{% extends "base.html" %}
+{% block content%}
+<div class="panel panel-primary">
+    <div class="panel-heading">用户管理平台</div>
+</div>
+
+<form role="form" id="gameplatform" action="/ops/user/" method="post">
+    <div class="form-group row">
+        <label for="gameplatname" class="col-sm-2 control-label">用户ID：[*必选]：</label>
+        <div class="col-sm-5">
+            <input class="form-control" id="gameplatname" type="text" name="gameplatname" value="" placeholder="用户ID">
+        </div>
+        <div class="col-sm-2">
+            <p id="namemsg" class="alert-danger"></p>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label for="userpwd1" class="col-sm-2 control-label">用户密码：[必选]：</label>
+        <div class="col-sm-5">
+            <input class="form-control" id="userpwd1" type="password" name="userpwd1" value="" placeholder="密码">
+        </div>
+            <div class="col-sm-2">
+            <p id="userpwd1msg"></p>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label for="userpwd2" class="col-sm-2 control-label">确认密码：[必选]：</label>
+        <div class="col-sm-5">
+            <input class="form-control" id="userpwd2" type="password" name="userpwd2" value="" placeholder="确认密码">
+        </div>
+            <div class="col-sm-2">
+            <p id="userpwd2msg"></p>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label for="username" class="col-sm-2 control-label">用户名称：[必选]：</label>
+        <div class="col-sm-5">
+            <input class="form-control" id="username" type="text" name="username" value="" placeholder="用户名称">
+        </div>
+            <div class="col-sm-2">
+            <p id="usernamemsg"></p>
+        </div>
+    </div>
+
+    <div class="form-group row">
+    <label class="col-sm-2 control-label">所属游戏平台[*必选]：</label>
+    <div class="col-sm-5">
+        <select multiple="" class="form-control" id="gplat" name="gplat">
+        {% for gp in gps %}
+                <option value="{{ gp.id }}">{{ gp }} {{gp.Memo}}</option>
+        {% endfor %}
+        </select>
+        <p class="help"> 按下 "Control"，或者在Mac上按 "Command" 来选择多个值。</p>
+        </div>
+    </div>
+
+
+
+    <div class="form-group row">
+        <div class="col-md-7">
+            <button type="button" class="btn btn-primary" style="float:right;" id="addbtn" value="user">添加</button>
+        </div>
+    </div>
+
+    <div class="col-md-7">
+    <div class="table-responsive">
+        <table class="table table-striped table-hover table-bordered">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>ID</th>
+                    <th>密码</th>
+                    <th>确认密码</th>
+                    <th>名称</th>
+                    <th>所属平台</th>
+                    <th>更新</th>
+                    <th>Delete</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for u in users %}
+                <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <td>{{ u.Euser }}</td>
+                    <td>***</td>
+                    <td>***</td>
+                    <td>{{ u.Name }}</td>
+                    <td>
+                    {%for g in u.Gplat.all %}
+                        {{g.Name}}
+                    {% endfor %}
+                    </td>
+                    <td><button type="button" class="btn btn-default" id="userupbtn" value="{{ u.id }}">更新</button></td>
+                    <td><button type="button" class="btn btn-link" id="delbtn" value="{{ u.id }}">删除</button></td>
+                </tr>
+                {% endfor %}
+
+            </tbody>
+        </table>
+    </div>
+    </div>
+    <input type="hidden"  name="getfun" id="getfun" value="0"/>
+    <input type="hidden"  name="getid" id="getid" value="0"/>
+    </form>
+
+{% endblock %}
